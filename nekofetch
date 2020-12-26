@@ -23,7 +23,7 @@ esac
 url=$(curl -fsSL "$imgurl" | jq -r ".url")
 
 curl -fsSLo "$tmpfile.jpg" "$url"
-jp2a "$tmpfile.jpg" > "$tmpfile"
+jp2a --height=50 "$tmpfile.jpg" > "$tmpfile"
 neofetch --source "$tmpfile"
 
 rm "$tmpfile" "$tmpfile.jpg"
