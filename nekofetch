@@ -1,32 +1,22 @@
 #!/bin/sh
 
-if [ ! command -v jp2a &> /dev/null ]; then
-    echo "jp2a not found!"
-    exit 1
-fi
+required="neofetch jp2a jq"
 
-if [ ! command -v neofetch &> /dev/null ]; then
-    echo "neofetch not found!"
-    exit 1
-fi
+for req in $required; do
+    ! command -v "$req" > /dev/null 2>&1 && echo "$req not found!" && exit 1
+done
 
-if [ ! command -v jq &> /dev/null ]; then
-    echo "jq not found!"
-    exit 1
-fi
 
-[[ ! -d "/tmp/nekofetch" ]] && mkdir /tmp/nekofetch
+tmpfile="$(mktemp -p /tmp nekofetchXXXXXXXX)"
 
-if [[ "$1" = "--nsfw" ]]; then
-    url=$(curl "https://nekos.life/api/v2/img/cum_jpg" | jq -r ".url")
-    curl -fsSLo "/tmp/nekofetch/neko.jpg" "$url"
-
-    jp2a /tmp/nekofetch/neko.jpg > /tmp/nekofetch/neko
-    neofetch --source /tmp/nekofetch/neko
+if [ "$1" = "--nsfw" ]; then
+    url=$(curl -fsSL "https://nekos.life/api/v2/img/cum_jpg" | jq -r ".url")
 else
-    url=$(curl "https://nekos.life/api/v2/img/neko" | jq -r ".url")
-    curl -fsSLo "/tmp/nekofetch/neko.jpg" "$url"
-
-    jp2a /tmp/nekofetch/neko.jpg > /tmp/nekofetch/neko
-    neofetch --source /tmp/nekofetch/neko
+    url=$(curl -fsSL "https://nekos.life/api/v2/img/neko" | jq -r ".url")
 fi
+
+curl -fsSLo "$tmpfile.jpg" "$url"
+jp2a "$tmpfile.jpg" > "$tmpfile"
+neofetch --source "$tmpfile"
+
+rm "$tmpfile" "$tmpfile.jpg"
