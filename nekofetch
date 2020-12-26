@@ -9,11 +9,18 @@ done
 
 tmpfile="$(mktemp -p /tmp nekofetchXXXXXXXX)"
 
-if [ "$1" = "--nsfw" ]; then
-    url=$(curl -fsSL "https://nekos.life/api/v2/img/cum_jpg" | jq -r ".url")
-else
-    url=$(curl -fsSL "https://nekos.life/api/v2/img/neko" | jq -r ".url")
-fi
+case "$1" in
+    "--nsfw")
+        echo "Getting a nsfw image"
+        imgurl="https://nekos.life/api/v2/img/cum_jpg"
+        ;;
+    *)
+        echo "Getting a sfw image"
+        imgurl="https://nekos.life/api/v2/img/neko"
+        ;;
+esac
+
+url=$(curl -fsSL "$imgurl" | jq -r ".url")
 
 curl -fsSLo "$tmpfile.jpg" "$url"
 jp2a "$tmpfile.jpg" > "$tmpfile"
