@@ -1,0 +1,32 @@
+#!/bin/sh
+
+if [ ! command -v jp2a &> /dev/null ]; then
+    echo "jp2a not found!"
+    exit 1
+fi
+
+if [ ! command -v neofetch &> /dev/null ]; then
+    echo "neofetch not found!"
+    exit 1
+fi
+
+if [ ! command -v jq &> /dev/null ]; then
+    echo "jq not found!"
+    exit 1
+fi
+
+[[ ! -d "/tmp/nekofetch" ]] && mkdir /tmp/nekofetch
+
+if [[ "$1" = "--nsfw" ]]; then
+    url=$(curl "https://nekos.life/api/v2/img/cum_jpg" | jq -r ".url")
+    curl -fsSLo "/tmp/nekofetch/neko.jpg" "$url"
+
+    jp2a /tmp/nekofetch/neko.jpg > /tmp/nekofetch/neko
+    neofetch --source /tmp/nekofetch/neko
+else
+    url=$(curl "https://nekos.life/api/v2/img/neko" | jq -r ".url")
+    curl -fsSLo "/tmp/nekofetch/neko.jpg" "$url"
+
+    jp2a /tmp/nekofetch/neko.jpg > /tmp/nekofetch/neko
+    neofetch --source /tmp/nekofetch/neko
+fi
