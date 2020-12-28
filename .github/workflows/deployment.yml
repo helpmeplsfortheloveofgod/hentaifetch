@@ -29,7 +29,7 @@ jobs:
     - name: Build deb for iphoneos-arm
       uses: jiro4989/build-deb-action@v2
       with:
-        package: nekofetch
+        package: com.propr.nekofetch
         package_root: pkgroot
         maintainer: propr and bbaovanc
         version: ${{ steps.version.outputs.VERSION }}
@@ -38,7 +38,7 @@ jobs:
     - name: Build deb for amd64
       uses: jiro4989/build-deb-action@v2
       with:
-        package: nekofetch
+        package: com.propr.nekofetch
         package_root: pkgroot
         maintainer: propr and bbaovanc
         version: ${{ steps.version.outputs.VERSION }}
