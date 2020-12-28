@@ -20,7 +20,7 @@ case "$1" in
         ;;
 esac
 
-height=${2:-$(($(tput lines) - 5))}
+height=${2:-$(($(stty size | awk '{print $1}') - 5))}
 echo "Using height $height"
 
 url=$(curl -fsSL "$imgurl" | jq -r ".url")
