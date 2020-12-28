@@ -33,7 +33,7 @@ jobs:
     - name: Build deb for amd64
       uses: jiro4989/build-deb-action@v2
       with:
-        package: com.propr.nekofetch
+        package: nekofetch
         package_root: pkgroot
         maintainer: propr and bbaovanc
         version: 0-git-${{ steps.hash.outputs.sha_short }}
@@ -49,4 +49,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: amd64-deb
-        path: com.propr.nekofetch*amd64.deb
+        path: nekofetch*amd64.deb
