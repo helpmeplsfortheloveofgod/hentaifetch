@@ -52,8 +52,8 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./nekofetch_${{ steps.version.outputs.VERSION }}_iphoneos-arm.deb
-        asset_name: nekofetch_${{ steps.version.outputs.VERSION }}_iphoneos-arm.deb
+        asset_path: ./com.propr.nekofetch_${{ steps.version.outputs.VERSION }}_iphoneos-arm.deb
+        asset_name: com.propr.nekofetch_${{ steps.version.outputs.VERSION }}_iphoneos-arm.deb
         asset_content_type: application/vnd.debian.binary-package
     - name: Upload amd64 asset
       id: upload-amd64-asset
@@ -62,6 +62,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./nekofetch_${{ steps.version.outputs.VERSION }}_amd64.deb
-        asset_name: nekofetch_${{ steps.version.outputs.VERSION }}_amd64.deb
+        asset_path: ./com.propr.nekofetch_${{ steps.version.outputs.VERSION }}_amd64.deb
+        asset_name: com.propr.nekofetch_${{ steps.version.outputs.VERSION }}_amd64.deb
         asset_content_type: application/vnd.debian.binary-package

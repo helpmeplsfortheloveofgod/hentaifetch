@@ -44,9 +44,9 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: iphoneos-arm-deb
-        path: nekofetch*iphoneos-arm.deb
+        path: com.propr.nekofetch*iphoneos-arm.deb
     - name: Upload amd64 deb as artifact
       uses: actions/upload-artifact@v2
       with:
         name: amd64-deb
-        path: nekofetch*amd64.deb
+        path: com.propr.nekofetch*amd64.deb
