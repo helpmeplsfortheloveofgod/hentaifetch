@@ -27,7 +27,7 @@ jobs:
         package: nekofetch
         package_root: pkgroot
         maintainer: propr and bbaovanc
-        version: 0.2dev2-git-${{ steps.hash.outputs.sha_short }}
+        version: 0-git-${{ steps.hash.outputs.sha_short }}
         arch: 'iphoneos-arm'
         desc: 'neofetch with nekos'
     - name: Build deb for amd64
@@ -36,7 +36,7 @@ jobs:
         package: nekofetch
         package_root: pkgroot
         maintainer: propr and bbaovanc
-        version: 0.2dev2-git-${{ steps.hash.outputs.sha_short }}
+        version: 0-git-${{ steps.hash.outputs.sha_short }}
         arch: 'amd64'
         desc: 'neofetch with nekos'
 
