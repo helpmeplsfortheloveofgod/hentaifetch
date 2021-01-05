@@ -10,12 +10,16 @@ done
 tmpfile="$(mktemp -p /tmp nekofetchXXXXXXXX)"
 
 case "$1" in
-    "--nsfw")
+    "--nsfw"|"nsfw"|"-n"|"n")
         echo "Getting a nsfw image"
         imgurl="https://nekos.life/api/v2/img/cum_jpg"
         ;;
-    *)
+    "--sfw"|"sfw"|"-s"|"s")
         echo "Getting a sfw image"
+        imgurl="https://nekos.life/api/v2/img/neko"
+        ;;
+    *)
+        echo "Could not interpret as either sfw or nsfw. Defaulting to sfw."
         imgurl="https://nekos.life/api/v2/img/neko"
         ;;
 esac
