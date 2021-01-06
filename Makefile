@@ -1,4 +1,4 @@
-VERSION ?= $(shell git tag --points-at HEAD)
+VERSION ?= $(shell git tag --points-at HEAD | sed 's/^v//')
 VERSION += 0-git-$(shell git rev-parse --short HEAD)
 VERSION := $(word 1, $(VERSION))
 
