@@ -19,10 +19,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Build iOS deb
-      run: make iosdeb
-    - name: Build amd64 deb
-      run: make amd64deb
+    - name: Build debs
+      run: make debs
 
     - name: Upload iphoneos-arm deb as artifact
       uses: actions/upload-artifact@v2

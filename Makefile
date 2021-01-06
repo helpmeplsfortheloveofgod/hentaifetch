@@ -2,10 +2,23 @@ VERSION ?= $(shell git tag --points-at HEAD | sed 's/^v//')
 VERSION += 0-git-$(shell git rev-parse --short HEAD)
 VERSION := $(word 1, $(VERSION))
 
-all: options iosdeb amd64deb
+include config.mk
+
+all:
+	@echo "Nekofetch doesn't need to be compiled, run 'make install' to install"
+
+debs: options iosdeb amd64deb
 
 options:
 	@echo "VERSION: $(VERSION)"
+
+install:
+	mkdir -p $(PREFIX)/bin
+	install -m 0755 nekofetch $(PREFIX)/bin/nekofetch
+	@echo "You may need to install jq, jp2a, and neofetch"
+
+uninstall:
+	rm -f $(PREFIX)/bin/nekofetch
 
 ioscontrol:
 	cp control.template ioscontrol
@@ -39,4 +52,4 @@ clean:
 	rm -f ioscontrol amd64control
 	rm -f com.propr.nekofetch_*_iphoneos-arm.deb nekofetch_*_amd64.deb
 
-.PHONY: all options clean iosdeb amd64deb
+.PHONY: all debs options install uninstall clean iosdeb amd64deb
