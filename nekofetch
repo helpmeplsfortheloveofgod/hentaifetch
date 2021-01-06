@@ -1,12 +1,5 @@
 #!/bin/sh
 
-required="neofetch jp2a jq curl"
-
-for req in $required; do
-    ! command -v "$req" > /dev/null 2>&1 && echo "$req not found!" && exit 1
-done
-
-
 tmpfile="$(mktemp -p /tmp nekofetchXXXXXXXX)"
 
 case "$1" in
