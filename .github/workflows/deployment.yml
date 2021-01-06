@@ -11,9 +11,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Get version
-      id: version
-      run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\/v/}
 
     - name: Create release
       id: create_release
@@ -26,24 +23,10 @@ jobs:
         draft: true
         prerelease: false
 
-    - name: Build deb for iphoneos-arm
-      uses: jiro4989/build-deb-action@v2
-      with:
-        package: com.propr.nekofetch
-        package_root: pkgroot
-        maintainer: propr and bbaovanc
-        version: ${{ steps.version.outputs.VERSION }}
-        arch: 'iphoneos-arm'
-        desc: 'neofetch with nekos'
-    - name: Build deb for amd64
-      uses: jiro4989/build-deb-action@v2
-      with:
-        package: nekofetch
-        package_root: pkgroot
-        maintainer: propr and bbaovanc
-        version: ${{ steps.version.outputs.VERSION }}
-        arch: 'amd64'
-        desc: 'neofetch with nekos'
+    - name: Build iOS deb
+      run: make iosdeb
+    - name: Build amd64 deb
+      run: make amd64deb
 
     - name: Upload iphoneos-arm asset
       id: upload-iphoneos-arm-asset
