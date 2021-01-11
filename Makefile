@@ -2,7 +2,7 @@ VERSION ?= $(shell git tag --points-at HEAD | sed 's/^v//')
 VERSION += 0-git-$(shell git rev-parse --short HEAD)
 VERSION := $(word 1, $(VERSION))
 
-include config.mk
+PREFIX  ?= /usr
 
 all:
 	@echo "Nekofetch doesn't need to be compiled, run 'make install' to install"
