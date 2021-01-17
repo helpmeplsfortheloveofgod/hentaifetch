@@ -34,12 +34,16 @@ amd64control:
 iosdebroot: ioscontrol
 	mkdir -p iosdebroot/DEBIAN
 	mkdir -p iosdebroot/usr/bin
+	mkdir -p iosdebroot/usr/share/doc/nekofetch
 	cp ioscontrol iosdebroot/DEBIAN/control
+	cp LICENSE iosdebroot/usr/share/doc/nekofetch/copyright
 	cp nekofetch iosdebroot/usr/bin/nekofetch
 amd64debroot: amd64control
 	mkdir -p amd64debroot/DEBIAN
 	mkdir -p amd64debroot/usr/bin
+	mkdir -p amd64debroot/usr/share/doc/nekofetch
 	cp amd64control amd64debroot/DEBIAN/control
+	cp LICENSE amd64debroot/usr/share/doc/nekofetch/copyright
 	cp nekofetch amd64debroot/usr/bin/nekofetch
 
 iosdeb: iosdebroot
