@@ -26,7 +26,7 @@ curl -fsSLo "$tmpfile.jpg" "$url"
 if [ "$TERM" = "xterm-kitty" ]; then
     neofetch --kitty "$tmpfile.jpg"
 else
-    jp2a --colors --color-depth=8 --height="$height" "$tmpfile.jpg" > "$tmpfile"
+    jp2a --height="$height" "$tmpfile.jpg" > "$tmpfile"
     neofetch --source "$tmpfile"
 fi
 
