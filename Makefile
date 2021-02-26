@@ -9,6 +9,10 @@ all:
 
 debs: options iosdeb amd64deb
 
+debroots: options iosdebroot amd64debroot
+
+controls: options ioscontrol amd64control
+
 options:
 	@echo "VERSION: $(VERSION)"
 
@@ -56,4 +60,4 @@ clean:
 	rm -f ioscontrol amd64control
 	rm -f com.propr.nekofetch_*_iphoneos-arm.deb nekofetch_*_amd64.deb
 
-.PHONY: all debs options install uninstall clean iosdeb amd64deb
+.PHONY: all debs debroots controls options install uninstall iosdeb amd64deb clean
