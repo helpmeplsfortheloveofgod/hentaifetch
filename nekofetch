@@ -34,10 +34,16 @@ url=$(curl -fsSL "$imgurl" | jq -r ".url")
 
 curl -fsSLo "$tmpfile.jpg" "$url"
 if [ "$TERM" = "xterm-kitty" ]; then
-    neofetch --kitty "$tmpfile.jpg"
+    command -v convert > /dev/null 2>&1 && neofetch --kitty "$tmpfile.jpg" || kitty_imagemagick_warn=true
+    if [ "$kitty_imagemagick_warn" = "true" ]; then
+        jp2a --height="$height" "$tmpfile.jpg" > "$tmpfile"
+        neofetch --source "$tmpfile"
+    fi
 else
     jp2a --height="$height" "$tmpfile.jpg" > "$tmpfile"
     neofetch --source "$tmpfile"
 fi
 
 rm "$tmpfile" "$tmpfile.jpg"
+
+[ "$kitty_imagemagick_warn" = "true" ] && echo "WARN: imagemagick is required for kitty image backend"
