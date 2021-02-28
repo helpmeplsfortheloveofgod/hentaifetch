@@ -4,29 +4,21 @@ tmpfile="$(mktemp nekofetchXXXXXXXX)"
 
 case "$1" in
     "--nsfw"|"nsfw"|"-n"|"n")
-        if [ "$DEBUG" = true ]; then
-            echo "Getting a nsfw image"
-        fi
+        [ "$DEBUG" = "true" ] && echo "Getting a nsfw image"
         imgurl="https://nekos.life/api/v2/img/cum_jpg"
         ;;
     "--sfw"|"sfw"|"-s"|"s")
-        if [ "$DEBUG" = true ]; then
-            echo "Getting a sfw image"
-        fi
+        [ "$DEBUG" = "true" ] && echo "Getting a sfw image"
         imgurl="https://nekos.life/api/v2/img/neko"
         ;;
     *)
-        if [ "$DEBUG" = true ]; then
-            echo "Could not interpret as either sfw or nsfw. Defaulting to sfw."
-        fi
+        [ "$DEBUG" = "true" ] && echo "Could not interpret as either sfw or nsfw. Defaulting to sfw."
         imgurl="https://nekos.life/api/v2/img/neko"
         ;;
 esac
 
 echo "$2" | grep -qE '^[0-9]+$' && height="$2" || height="$(($(stty size | awk '{print $1}') - 5))"
-if [ "$DEBUG" = true ]; then
-    echo "Using height $height"
-fi
+[ "$DEBUG" = "true" ] && echo "Using height $height"
 
 url=$(curl -fsSL "$imgurl" | jq -r ".url")
 
