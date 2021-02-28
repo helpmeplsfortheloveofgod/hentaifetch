@@ -1,6 +1,6 @@
 #!/bin/sh
 
-tmpfile="$(mktemp nekofetchXXXXXXXX)"
+tmpfile="$(mktemp)"
 
 case "$1" in
     "--nsfw"|"nsfw"|"-n"|"n")
