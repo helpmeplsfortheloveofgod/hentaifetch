@@ -2,23 +2,21 @@
 
 tmpfile="$(mktemp nekofetchXXXXXXXX)"
 
-debug=true
-
 case "$1" in
     "--nsfw"|"nsfw"|"-n"|"n")
-        if [ "$debug" = true ]; then
+        if [ "$DEBUG" = true ]; then
             echo "Getting a nsfw image"
         fi
         imgurl="https://nekos.life/api/v2/img/cum_jpg"
         ;;
     "--sfw"|"sfw"|"-s"|"s")
-        if [ "$debug" = true ]; then
+        if [ "$DEBUG" = true ]; then
             echo "Getting a sfw image"
         fi
         imgurl="https://nekos.life/api/v2/img/neko"
         ;;
     *)
-        if [ "$debug" = true ]; then
+        if [ "$DEBUG" = true ]; then
             echo "Could not interpret as either sfw or nsfw. Defaulting to sfw."
         fi
         imgurl="https://nekos.life/api/v2/img/neko"
@@ -26,7 +24,7 @@ case "$1" in
 esac
 
 echo "$2" | grep -qE '^[0-9]+$' && height="$2" || height="$(($(stty size | awk '{print $1}') - 5))"
-if [ "$debug" = true ]; then
+if [ "$DEBUG" = true ]; then
     echo "Using height $height"
 fi
 
