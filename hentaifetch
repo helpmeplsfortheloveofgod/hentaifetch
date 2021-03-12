@@ -5,7 +5,15 @@ tmpfile="$(mktemp)"
 echo "$2" | grep -qE '^[0-9]+$' && height="$2" || height="$(($(stty size | awk '{print $1}') - 5))"
 [ "$DEBUG" = "true" ] && echo "Using height $height"
 
-url=$(curl -fsSL "https://nhentai.net/g/$1/" | grep -o "https://t\.nhentai\.net/galleries/[[:digit:]]*/cover\.[[:lower:]]*" | head -1)
+if [ "x$1" = "x" ]; then
+	id=$(($RANDOM % 350000 + 1))
+	echo $id
+else
+	id=$1
+fi
+
+
+url=$(curl -fsSL "https://nhentai.net/g/$id/" | grep -o "https://t\.nhentai\.net/galleries/[[:digit:]]*/cover\.[[:lower:]]*" | head -1)
 echo $url
 echo $tmpfile
 curl -fsSLo "$tmpfile" "$url"
