@@ -2,27 +2,12 @@
 
 tmpfile="$(mktemp)"
 
-case "$1" in
-    "--nsfw"|"nsfw"|"-n"|"n")
-        [ "$DEBUG" = "true" ] && echo "Getting a nsfw image"
-        imgurl="https://nekos.life/api/v2/img/cum_jpg"
-        ;;
-    "--sfw"|"sfw"|"-s"|"s")
-        [ "$DEBUG" = "true" ] && echo "Getting a sfw image"
-        imgurl="https://nekos.life/api/v2/img/neko"
-        ;;
-    *)
-        [ "$DEBUG" = "true" ] && echo "Could not interpret as either sfw or nsfw. Defaulting to sfw."
-        imgurl="https://nekos.life/api/v2/img/neko"
-        ;;
-esac
-
 echo "$2" | grep -qE '^[0-9]+$' && height="$2" || height="$(($(stty size | awk '{print $1}') - 5))"
 [ "$DEBUG" = "true" ] && echo "Using height $height"
 
-url=$(curl -fsSL "$imgurl" | jq -r ".url")
-
+url="https://t.nhentai.net/galleries/$1/cover.png"
 curl -fsSLo "$tmpfile.jpg" "$url"
+
 if [ "$TERM" = "xterm-kitty" ]; then
     command -v convert > /dev/null 2>&1 && neofetch --kitty "$tmpfile.jpg" || kitty_imagemagick_warn=true
     if [ "$kitty_imagemagick_warn" = "true" ]; then
