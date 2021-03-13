@@ -14,22 +14,31 @@ fi
 
 
 url=$(curl -fsSL "https://nhentai.net/g/$id/" | grep -o "https://t\.nhentai\.net/galleries/[[:digit:]]*/cover\.[[:lower:]]*" | head -1)
-echo $url
-echo $tmpfile
-curl -fsSLo "$tmpfile" "$url"
+format=$(echo "$url" | grep -o \.[[:lower:]]*$)
+echo "$url"
+echo "$tmpfile"
+echo "$format"
+curl -fsSLo "$tmpfile$format" "$url"
+
+if [ "$format" = ".gif" ]; then
+	convert "$tmpfile$format[0]" "$tmpfile.jpg"
+	rm "$tmpfile$format"
+	mv "$tmpfile.jpg" "$tmpfile$format"
+fi
+	
 
 
 if [ "$TERM" = "xterm-kitty" ]; then
-   command -v convert > /dev/null 2>&1 && neofetch --kitty "$tmpfile" || kitty_imagemagick_warn=true
+   command -v convert > /dev/null 2>&1 && neofetch --kitty "$tmpfile$format" || kitty_imagemagick_warn=true
     if [ "$kitty_imagemagick_warn" = "true" ]; then
-        jp2a --height="$height" "$tmpfile" > "$tmpfile"
+        jp2a --height="$height" "$tmpfile$format" > "$tmpfile"
         neofetch --source "$tmpfile"
     fi
 else
-    jp2a --height="$height" "$tmpfile" > "$tmpfile"
+    jp2a --height="$height" "$tmpfile$format" > "$tmpfile"
     neofetch --source "$tmpfile"
 fi
 
-rm "$tmpfile"
+rm "$tmpfile" "$tmpfile$format"
 
 [ "$kitty_imagemagick_warn" = "true" ] && echo "WARN: imagemagick is required for kitty image backend"

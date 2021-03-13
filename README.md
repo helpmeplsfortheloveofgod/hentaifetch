@@ -1,2 +1,2 @@
-# nekofetch
-hentaifetch but with nekos
+# hentaifetch
+neofetch but with hentai
