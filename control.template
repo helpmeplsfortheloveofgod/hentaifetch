@@ -1,6 +1,0 @@
-Package: PACKAGE
-Architecture: ARCH
-Version: VERSION
-Depends: curl, jp2a, neofetch, imagemagick
-Description: neofetch but with hentai
-Maintainer: The personified devil <leonhard60-hfetch@yahoo.com>
