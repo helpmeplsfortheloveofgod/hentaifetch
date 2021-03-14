@@ -13,8 +13,7 @@ options:
 install:
 	mkdir -p $(PREFIX)/bin
 	install -m 0755 hentaifetch $(PREFIX)/bin/hentaifetch
-	@echo "You may need to install jq, jp2a, and neofetch"
-	@echo "imagemagick is also required to use the kitty image backend"
+	@echo "You may need to install jq, jp2a, imagemagick and neofetch"
 
 uninstall:
 	rm -f $(PREFIX)/bin/hentaifetch
