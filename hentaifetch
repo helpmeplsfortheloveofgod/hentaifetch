@@ -5,7 +5,7 @@ tmpfile="$(mktemp)"
 echo "$2" | grep -qE '^[0-9]+$' && height="$2" || height="$(($(stty size | awk '{print $1}') - 5))"
 [ "$DEBUG" = "true" ] && echo "Using height $height"
 
-if [[ $(echo "$1" | grep "#*[[:digit:]]*") ]]; then
+if [ $(echo "$1" | grep "#*[[:digit:]]*") ]; then
 	
 	id=$(echo "$1" | grep -o "[[:digit:]]*")
 else
@@ -20,8 +20,8 @@ url=$(curl -fsSL "https://nhentai.net/g/$id/" | grep -o "https://t\.nhentai\.net
 
 format=$(echo "$url" | grep -o \.[[:lower:]]*$)
 
-# echo "$id"
-# echo "$url"
+#echo "$id"
+#echo "$url"
 # echo "$tmpfile" 
 # echo "$format"
 
