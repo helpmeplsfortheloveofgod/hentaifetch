@@ -9,7 +9,8 @@ if [ $(echo "$1" | grep "#*[[:digit:]]*") ]; then
 	
 	id=$(echo "$1" | grep -o "[[:digit:]]*")
 else
-	nurl=$(curl -fsSL "https://wholesomelist.com/random" | grep -m1 -o "https://nhentai\.net/g/[[:digit:]]*")
+	# adding | tac | tac | to the curl prevents `curl (23)` error
+	nurl=$(curl -fsSL "https://wholesomelist.com/random" | tac | tac | grep -m1 -o "https://nhentai\.net/g/[[:digit:]]*")
 	id=$(echo "$nurl" | grep -o "[[:digit:]]*")
 fi
 
