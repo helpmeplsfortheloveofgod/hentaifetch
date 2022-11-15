@@ -2,47 +2,22 @@
 
 tmpfile="$(mktemp)"
 
-# echo "$2" | grep -qE '^[0-9]+$' && height="$2" || height="$(($(stty size | awk '{print $1}') - 5))"
-# [ "$DEBUG" = "true" ] && echo "Using height $height"
+# Fetches wholesomelist for a random h*
+page=$(curl -fsSL "https://wholesomelist.com/random")
 
-if [ $(echo "$1" | grep "#*[[:digit:]]*") ]; then
-	
-	id=$(echo "$1" | grep -o "[[:digit:]]*")
-else
-	nurl=$(curl -fsSL "https://wholesomelist.com/random" | grep -m1 -o "https://nhentai\.net/g/[[:digit:]]*")
-	id=$(echo "$nurl" | grep -o "[[:digit:]]*")
-fi
+# Grep the cover image link
+img=$(echo "$page" | grep -m1 -o "https://wholesomelist.com/asset/.*.jpg")
+# Grep the nhentai link
+link=$(echo "$page" | grep -m1 -o "https://nhentai.net/g/[[:digit:]]*")
+# Grep the nhentai numbers/id
+id=$(echo "$link" | grep -m1 -o "[[:digit:]]*")
 
+# fetches the image into a temporary file
+curl -fsSL "$img" > "$tmpfile.jpg"
 
-url=$(curl -fsSL "https://nhentai.net/g/$id/" | grep -o "https://t\.nhentai\.net/galleries/[[:digit:]]*/cover\.[[:lower:]]*" | head -1)
+# Displays the image as ascii with jp2a backend in neofetch
+neofetch --jp2a "$tmpfile.jpg"
+printf "[36m[1mNHentai tag: [0m#$id\n" # Show the nhentai numbers for research purposes
 
-format=$(echo "$url" | grep -o "\.[[:lower:]]*$")
-
-# echo "$id"
-# echo "$url"
-# echo "$tmpfile" 
-# echo "$format"
-
-curl -fsSLo "$tmpfile$format" "$url"
-
-if [ "$format" = ".gif" ]; then
-	convert "$tmpfile$format[0]" "$tmpfile.jpg"
-	rm "$tmpfile$format"
-	mv "$tmpfile.jpg" "$tmpfile$format"
-fi
-	
-
-
-if [ "$TERM" = "xterm-kitty" ]; then
-    command -v convert > /dev/null 2>&1 && neofetch --kitty "$tmpfile$format" || kitty_imagemagick_warn=true
-    if [ "$kitty_imagemagick_warn" = "true" ]; then
-        neofetch --jp2a "$tmpfile$format"
-    fi
-else
-    neofetch --jp2a "$tmpfile$format"
-fi
-printf "[36m[1mNHentai tag: [0m#$id\n"
-
-rm "$tmpfile" "$tmpfile$format"
-
-[ "$kitty_imagemagick_warn" = "true" ] && echo "WARN: imagemagick is required for kitty image backend"
+# Delete the temporary file
+rm "$tmpfile" "$tmpfile.jpg"
