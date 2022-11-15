@@ -5,7 +5,7 @@ VERSION := $(word 1, $(VERSION))
 PREFIX  ?= /usr
 
 all:
-	@echo "Nekofetch doesn't need to be compiled, run 'make install' to install"
+	@echo "Hentaifetch doesn't need to be compiled, run 'make install' to install"
 
 options:
 	@echo "VERSION: $(VERSION)"
@@ -13,7 +13,7 @@ options:
 install:
 	mkdir -p $(PREFIX)/bin
 	install -m 0755 hentaifetch $(PREFIX)/bin/hentaifetch
-	@echo "You may need to install jq, jp2a, imagemagick and neofetch"
+	@echo "You may need to install jp2a and neofetch"
 
 uninstall:
 	rm -f $(PREFIX)/bin/hentaifetch
