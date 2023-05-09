@@ -23,7 +23,7 @@ if [ "$TERM" = "xterm-kitty" ]; then
 else
     neofetch --jp2a "$tmpfile"
 fi
-printf "^[[36m^[[1mNHentai tag: ^[[0m#$tag\n"
+printf "NHentai tag: #$tag\n"
 
 rm "$tmpfile"
 
