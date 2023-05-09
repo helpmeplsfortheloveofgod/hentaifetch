@@ -18,10 +18,10 @@ curl -fsSLo "$tmpfile" "$url"
 if [ "$TERM" = "xterm-kitty" ]; then
     command -v convert > /dev/null 2>&1 && neofetch --kitty "$tmpfile" || kitty_imagemagick_warn=true
     if [ "$kitty_imagemagick_warn" = "true" ]; then
-        neofetch --caca "$tmpfile"
+        neofetch --chafa "$tmpfile" --size 360 --gap 0
     fi
 else
-    neofetch --caca "$tmpfile"
+    neofetch --chafa "$tmpfile" --size 360 --gap 0
 fi
 printf "NHentai tag: #$tag\n"
 
