@@ -1,22 +1,22 @@
-#!/bin/sh
+#!/bin/bash
 
-tmpfile="$(mktemp)"
-
-# echo "$2" | grep -qE '^[0-9]+$' && height="$2" || height="$(($(stty size | awk '{print $1}') - 5))"
-# [ "$DEBUG" = "true" ] && echo "Using height $height"
+tmpimg="$(mktemp)"
+tmpchafa="$(mktemp)"
+tmpfetch="$(mktemp)"
 
 random=$(curl -sl "https://wholesomelist.com/random")
 id=$(echo $random | grep -oP '(?<=list\/)\S+')
 
-nurl=$(curl -fsSL "https://wholesomelist.com/list/$id" | grep -m1 -o "https://nhentai\.net/g/[[:digit:]]*")
+nurl=$(curl -fsSL "https://wholesomelist.com/list/$id" 2>/dev/null | grep -m1 -o "https://nhentai\.net/g/[[:digit:]]*")
 tag=$(echo "$nurl" | grep -o "[[:digit:]]*")
 
 url=$(echo https://wholesomelist.com/asset/$id.jpg)
 
-curl -fsSLo "$tmpfile" "$url"
-
-neofetch --chafa "$tmpfile" --size 360 --gap 0
+curl -fsSLo $tmpimg "$url"
+chafa $tmpimg --center=off -s 23x34 > $tmpchafa
+neofetch --off --gap 0 > $tmpfetch
+paste -d '' $tmpchafa $tmpfetch
 
 printf "NHentai tag: #$tag\n"
 
-rm "$tmpfile"
+rm "$tmpimg" "$tmpchafa" "$tmpfetch"
