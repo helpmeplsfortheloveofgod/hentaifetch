@@ -15,16 +15,8 @@ url=$(echo https://wholesomelist.com/asset/$id.jpg)
 
 curl -fsSLo "$tmpfile" "$url"
 
-if [ "$TERM" = "xterm-kitty" ]; then
-    command -v convert > /dev/null 2>&1 && neofetch --kitty "$tmpfile" || kitty_imagemagick_warn=true
-    if [ "$kitty_imagemagick_warn" = "true" ]; then
-        neofetch --chafa "$tmpfile" --size 360 --gap 0
-    fi
-else
-    neofetch --chafa "$tmpfile" --size 360 --gap 0
-fi
+neofetch --chafa "$tmpfile" --size 360 --gap 0
+
 printf "NHentai tag: #$tag\n"
 
 rm "$tmpfile"
-
-[ "$kitty_imagemagick_warn" = "true" ] && echo "WARN: imagemagick is required for kitty image backend"
