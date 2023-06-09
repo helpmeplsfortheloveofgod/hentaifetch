@@ -1,22 +1,25 @@
 #!/bin/bash
 
-tmpimg="$(mktemp)"
-tmpchafa="$(mktemp)"
-tmpfetch="$(mktemp)"
+image_file="$(mktemp)"
+chafa_output="$(mktemp)"
+system_info="$(mktemp)"
 
 random=$(curl -sl "https://wholesomelist.com/random")
-id=$(echo $random | grep -oP '(?<=list\/)\S+')
+id=$(echo "$random" | grep -oP '(?<=list\/)\S+')
 
 nurl=$(curl -fsSL "https://wholesomelist.com/list/$id" 2>/dev/null | grep -m1 -o "https://nhentai\.net/g/[[:digit:]]*")
 tag=$(echo "$nurl" | grep -o "[[:digit:]]*")
 
-url=$(echo https://wholesomelist.com/asset/$id.jpg)
+url="https://wholesomelist.com/asset/$id.jpg"
 
-curl -fsSLo $tmpimg "$url"
-chafa $tmpimg --center=off -s 23x34 > $tmpchafa
-neofetch --off --gap 0 > $tmpfetch
-paste -d '' $tmpchafa $tmpfetch
+if curl -fsSLo "$image_file" "$url"; then
+  chafa "$image_file" --center=off -s 23x34 > "$chafa_output"
+  neofetch --off --gap 0 > "$system_info"
+  paste -d '' "$chafa_output" "$system_info"
 
-printf "NHentai tag: #$tag\n"
+  printf "NHentai tag: #%s\n" "$tag"
+else
+  echo "Failed to download the image."
+fi
 
-rm "$tmpimg" "$tmpchafa" "$tmpfetch"
+rm "$image_file" "$chafa_output" "$system_info"
