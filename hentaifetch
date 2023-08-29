@@ -13,11 +13,21 @@ tag=$(echo "$nurl" | grep -o "[[:digit:]]*")
 url="https://wholesomelist.com/asset/$id.jpg"
 
 if curl -fsSLo "$image_file" "$url"; then
-  chafa "$image_file" --center=off -s 23x34 > "$chafa_output"
-  neofetch --off --gap 0 > "$system_info"
-  paste -d '' "$chafa_output" "$system_info"
 
-  printf "NHentai tag: #%s\n" "$tag"
+  if [ "$1" = "--pixel" ]; then
+    chafa "$image_file" --center=off -s 23x34 > "$chafa_output"
+    neofetch --off --gap 0 > "$system_info"
+    paste -d '' "$chafa_output" "$system_info"
+  else
+    neofetch "$1" $image_file
+  fi
+
+  if [ "$tag" = "" ]; then
+    printf "No matching NHentai tag found"
+  else
+    printf "NHentai tag: #%s\n" "$tag"
+  fi
+
 else
   echo "Failed to download the image."
 fi
